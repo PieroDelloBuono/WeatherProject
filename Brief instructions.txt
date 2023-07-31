@@ -1,0 +1,67 @@
+While the application is running on a IDE, you need Postman or a similar API Client tester
+
+The application have 5 methods:
+
+-Save Weather Preferences
+
+URL: http://localhost:8080/api/savePreferences
+
+You need a JSON body for it to work. The JSON needs an "id" to indentify the session and a "locationModels" list
+of objects, the object must have a valid "zipcode" and a valid "country" parameters (More on the validation on 
+the end of the document). The method saves in the cache the session with all the weather informations of the 
+locations of the session.
+The method returns a JSON body with the status code and a message.
+
+
+-Delete Weather Preferences
+
+URL: http://localhost:8080/api/deletePreferences
+
+You need a JSON body for it to work. The JSON needs an "id" to identify an already existing session in the cache
+and a "locationModels" list of objects with locations present in the sessions, the object must have a valid 
+"zipcode" and a valid "country" parameters (More on the validation on the end of the document). The method deletes
+from the cache the locations of the session that are present in the body of the request.
+The method returns a JSON body with the status code, a message and a list of objects "locationModels" deleted from
+the session.
+
+
+-Delete Session
+
+URL: http://localhost:8080/api/deleteSession/{id}
+
+You need to change the {id} in the url with an integer. If the "id" is valid and a session with the "id" is
+present in the cache the session is deleted from the cache.
+The method returns a JSON body with the status code and a message.
+
+
+-Get Weather Preferences
+
+URL: http://localhost:8080/api/getPreferences/{id}
+
+You need to change the {id} in the url with an integer. If the "id" is valid and a session with the "id" is
+present in the cache it's returned a JSON body with all the informations of the session: meaning, all the
+weather informations of all the locations present in the session.
+
+
+-Search Weather Preferences
+
+URL: http://localhost:8080/api/searchPreferences
+
+You need a JSON body for it to work. The JSON needs an "id" to indentify the session and a "locationModels" list
+of objects, the object must have a valid "zipcode", a boolean "cache" and a valid "country" parameters (More on the validation on 
+the end of the document). The method returns a JSON body with all the informations of the locations present in
+the body of the request from the session. If the value of "cache" is true the JSON returned is simply taken by
+the cache if present. If the value of "cache" is false then the informations of the locations are updated,
+returned in the JSON and saved in the cache.
+
+
+Valid "zipdcode" and "country"
+
+For a valid parameter you will need to follow the following instructions:
+
+-For a valid "zipcode" parameter you must input a 5 digits number, any character different from a number
+is not a valid parameter, any number with more or less than 5 digits is not a valid parameter.
+
+-For a valid "country" parameter you must use a valid Alpha-2 ISO 3166 code for the country you want to search
+informations for. Please visit del following link for the complete list of valid Alpha-2 codes:
+"https://en.wikipedia.org/wiki/ISO_3166-1".
